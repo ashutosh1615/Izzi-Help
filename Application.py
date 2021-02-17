@@ -1,4 +1,4 @@
-import discord,db,Utility
+import discord,db,Utility,time,math
 from discord.ext import commands
 intents = discord.Intents.default()
 intents.members = True
@@ -10,16 +10,22 @@ embed_colour = 0xEE82EE
 db_cur=db.connect(db_cur)
 client = commands.Bot(command_prefix=prefix, case_insensitive=True,intents=intents)
 client.remove_command('help')
-@client.command(name="ping")
-async def _ping(ctx):
-   await ctx.send('Pong! {0}'.format(round(client.latency, 0)))
-                       
+
+@client.command(pass_context=True)
+async def ping(ctx):
+    """ Pong! """
+    before = time.monotonic()
+    message = await ctx.send("Pong!")
+    ping = (time.monotonic() - before) * 1000
+    await message.edit(content=f"Pong!  `{int(ping)}ms`")
+    print(f'Ping {int(ping)}ms')
+
 @client.command()
 async def loc(ctx,*, message = None):
      db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziDB" where name like \'%{message}%\'')
      ls =  db_cur.fetchone()
      name = ls[0]
-     zone = ls[0]
+     zone = ls[1]
      floor = ls[2]
   
      embedVar = discord.Embed(title=name.upper(), color=embed_colour)
@@ -34,7 +40,7 @@ async def invite(ctx):
     await ctx.send(f"Invite link to bot is {bot_invite} \n  and the server is {Official_server}") 
 
 @client.command()
-async def math(ctx,*,message):
+async def cal(ctx,*,message):
     cont= message.split(' ')
     operator = cont[1]
     if operator == '+':
@@ -52,16 +58,18 @@ async def math(ctx,*,message):
 async def card(ctx,*,message):
     cont= message.split(' ')
     ls = Utility.card(int(cont[0]),int(cont[1]))
-    silver = ls[0]
-    gold = ls[1]
-    platinum = ls[2]
-    cost=[(silver*40),(gold*50),(platinum*60)]
+    rarity = [ls[1],ls[2],ls[3]]
+    name = ['silver','gold','platinum']
+    cost=[(rarity[0]*40),(rarity[1]*50),(rarity[2]*60)]
     embed_var = discord.Embed(title = 'ENCHANTMENT',colour = embed_colour)
+    embed_var.set_footer(text= f"***total experience*** = {ls[0]}")
     embed_var.set_author(name=ctx.author.display_name, icon_url = ctx.author.avatar_url)
-    embed_var.add_field(name= "Amount of card needed:" , value="if you have same name divide the card by 3" ,inline= False)
-    embed_var.add_field(name = "silver", value= f'**TOTAL CARDS** :{silver} \n **TOTAL COST** :{cost[0]}' , inline =True)
-    embed_var.add_field(name = "gold", value= f'**TOTAL CARDS** :{gold} \n **TOTAL COST** :{cost[1]}' , inline =True)
-    embed_var.add_field(name = "platinum", value= f'**TOTAL CARDS** :{platinum} \n **TOTAL COST** :{cost[2]}' , inline =True)
+    embed_var.add_field(name= "**Amount of card with different name needed:**" , value=f"from lvl between {cont[0]} to {cont[1]}" ,inline= False)
+    for i in range(3):
+        embed_var.add_field(name = name[i], value= f'**TOTAL CARDS** :**{rarity[i]}** cards \n **TOTAL COST** :{cost[i]}' , inline =False)
+    embed_var.add_field(name="**Amount of card with same name needed**",value=f"from lvl between {cont[0]} to {cont[1]}",inline = False)
+    for j in range(3):
+        embed_var.add_field(name = name[i], value= f'**TOTAL CARDS** :**{(math.ceil(rarity[i]/3))}** cards \n **TOTAL COST** :{(cost[i]*3)}' , inline =False)
     await ctx.send(embed=embed_var)
 
 @client.command()
@@ -75,7 +83,7 @@ async def compare(ctx,*, message =None):
     defence = []
     speed = []
     intelligence = []
-    if len(cont)<=2:
+    if len(cont)<=3:
      for i in range(len(cont)):
         db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziDB" where name like \'%{cont[i]}%\'')
         ls=db_cur.fetchone()
@@ -93,7 +101,7 @@ async def compare(ctx,*, message =None):
       embedVar.add_field(name=Name[i], value=f'**TYPE** : {types[i]}\n **ABILITY** : {passiveness[i]}\n **ATK** : {attack[i]}\n **HP** : {health[i]}\n **DEF** : {defence[i]}\n **SPD** : {speed[i]}\n **INT** : {intelligence[i]}\n ', inline=True)
      await ctx.send(embed=embedVar)
     else:
-        await ctx.send('```Maximum number of comparison is 2```') 
+        await ctx.send('```Maximum number of comparison is 3```') 
 
 
 

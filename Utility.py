@@ -16,6 +16,6 @@ def card(start,end):
     silver = math.ceil(exp/200)
     gold= math.ceil(exp/250)
     platinum = math.ceil(exp/300)
-    return (silver,gold,platinum)        
+    return (exp,silver,gold,platinum)        
 
                

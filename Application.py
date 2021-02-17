@@ -1,4 +1,3 @@
-from pretty_help import PrettyHelp
 import discord,db,Utility
 from discord.ext import commands
 intents = discord.Intents.default()

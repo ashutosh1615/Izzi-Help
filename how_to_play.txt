@@ -1,0 +1,15 @@
+So you want to play IzziGame   Awesome, IzziHelp's got your back  Let us get into the world of xenverse
+
+Get started by using the command ```iz start```  This registers you as an IzziGame player 
+
+Horray! You just xenverse  and got your first Platanium card  Check what card you obtained by using the command ```iz inv```  This command is used whenever you want to view your inventory 
+
+Use the command ```iz select <card no  in inventory>``` to select your card which you want to battle with 
+
+```iz zone``` views all the Zone present in IzziGame  You'll have to progress from zone 1  Use the command ```iz zone 1``` to enter the 1st Zone 
+
+```iz fl``` views all the floors present in a certain Zone  Again, you'll have to progress from floor 1  Use the command ```iz fl 1``` to enter the 1st floor 
+
+So how do you progress through each floor? By battling of course  VIOLENCE IS THE WAY OUT HAHAHA You can enter a battle by using ```iz bt``` 
+
+As you win a battle, you unlock the next floor Enter the next floor by using ```iz fl n```  Keep winning battles on each floor until the last floor to unlock the next Zone  ```iz zone <Zone number>``` to enter an unlocked Zone 

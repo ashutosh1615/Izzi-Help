@@ -1,0 +1,13 @@
+When you view your inventory after beating the floors, you'll notice a lot of cards of the rarity silver,gold Use these cards to enhance your Platanium card and gain levels on it The higher the level, the more strong the card becomes Enhance your card using the command ```iz enh <card no to enhance> <Filter(optional)>``` 
+
+Cards can be evolved using guild features
+
+You can battle only when you have enough Mana Each battle costs 5 Mana You can gain Mana by using the ```iz hourly``` command to claim your hourly reward, and by voting for the IzziGame bot by using ```Iz daily``` Check your Mana by using ```iz mana```
+
+You can also obtain cards by buying them from other people using IZzigame currency 
+
+Buy items from the shop using ```iz shop```  Items can be equiped by using ```iz equip -cr <card number> -i <item number>```
+
+Earn gold by beating floors, Zone, raids, joining a guild, and voting for the IzziGame bot
+
+Join a Guild to get many bonuses Donate gold to the Guild to help them grow and level up for much higher bonuses Command: ```iz guild donate <Ammount>```

@@ -8,7 +8,7 @@ Official_server="https://discord.gg/g84AGfy6"
 db_cur = None
 embed_colour = 0xEE82EE
 db_cur=db.connect(db_cur)
-client = commands.Bot(command_prefix=prefix, case_insensitive=True,intents=intents, help_command=PrettyHelp())
+client = commands.Bot(command_prefix=prefix, case_insensitive=True,intents=intents)
 client.remove_command('help')
 @client.command(name="ping")
 async def _ping(ctx):

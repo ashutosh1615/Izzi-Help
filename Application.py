@@ -3,7 +3,7 @@ import discord,db,Utility
 from discord.ext import commands
 intents = discord.Intents.default()
 intents.members = True
-prefix = "i"
+prefix = "i."
 bot_invite="https://discord.com/api/oauth2/authorize?client_id=809710116098015232&permissions=536935424&scope=bot"
 Official_server="https://discord.gg/g84AGfy6"
 db_cur = None
@@ -81,9 +81,9 @@ async def compare(ctx,*, message =None):
         db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziDB" where name like \'%{cont[i]}%\'')
         ls=db_cur.fetchone()
         Name.append(ls[0])
-        types.append(ls[0])
+        types.append(ls[1])
         passiveness.append(ls[2])
-        attack.append(ls[2])
+        attack.append(ls[3])
         health.append(ls[4])
         defence.append(ls[5])
         speed.append(ls[6])
@@ -114,14 +114,14 @@ async def hplay(ctx,message=None):
     if message==None:
         file1=open("how_to_play.txt","r")
         content = file1.read()
-    elif message == '0':
+    elif message == '2':
         file1 = open("how_to_play2.txt","r")
         content = file1.read()
     else:
         await ctx.send("Provide a valid value")
     if content is not None:        
         embedVar = discord.Embed(title='How to play', description =content ,color=embed_colour)
-        embedVar.set_footer(text = 'use ```ihplay 0``` for the next page')
+        embedVar.set_footer(text = 'use ```ihplay 2``` for the next page')
         await ctx.send(embed= embedVar)
         
 client.run("ODA5NzEwMTE2MDk4MDE1MjMy.YCZDTw.STVd_YXqbqnu5vuGyINHgg0p9e0")

@@ -10,7 +10,10 @@ embed_colour = 0xEE82EE
 db_cur=db.connect(db_cur)
 client = commands.Bot(command_prefix=prefix, case_insensitive=True,intents=intents)
 client.remove_command('help')
-await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Ashutosh"))
+@client.event
+async def on_ready():
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="ashutosh sleeping"))
+
 
 @client.command(pass_context=True)
 async def ping(ctx):
@@ -38,7 +41,7 @@ async def loc(ctx,*, message = None):
 
 @client.command()
 async def help(ctx):
-    await ctx.send(f"go and check all commands in server in #about-izzi-help {Official_Server}")
+    await ctx.send(f"go and check all commands in server in #about-izzi-help {Official_server}")
 
 @client.command()
 async def invite(ctx):
@@ -126,7 +129,7 @@ async def hplay(ctx,message=None):
     if message==None:
         file1=open("how_to_play.txt","r")
         content = file1.read()
-        embedVar.set_footer(text = 'use ```xhplay 2``` for the next page')
+        
     elif message == '2':
         file1 = open("how_to_play2.txt","r")
         content = file1.read()
@@ -134,6 +137,8 @@ async def hplay(ctx,message=None):
         await ctx.send("Provide a valid value")
     if content is not None:        
         embedVar = discord.Embed(title='How to play', description =content ,color=embed_colour)
+        if message == None:
+            embedVar.set_footer(text = 'use ```xhplay 2``` for the next page')
         await ctx.send(embed= embedVar)
         
 client.run("ODA5NzEwMTE2MDk4MDE1MjMy.YCZDTw.STVd_YXqbqnu5vuGyINHgg0p9e0")

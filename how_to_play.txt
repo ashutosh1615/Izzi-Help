@@ -2,7 +2,7 @@ So you want to play IzziGame   Awesome, IzziHelp's got your back  Let us get int
 
 Get started by using the command ```iz start```  This registers you as an IzziGame player 
 
-Horray! You just xenverse  and got your first Platanium card  Check what card you obtained by using the command ```iz inv```  This command is used whenever you want to view your inventory 
+Horray! You just xenverse  and got your first Platinum card  Check what card you obtained by using the command ```iz inv```  This command is used whenever you want to view your inventory 
 
 Use the command ```iz select <card no  in inventory>``` to select your card which you want to battle with 
 

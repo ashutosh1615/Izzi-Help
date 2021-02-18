@@ -106,7 +106,7 @@ async def compare(ctx,*, message =None):
      embedVar = discord.Embed(title='Comparison', color=embed_colour)
      embedVar.set_author(name=ctx.author.display_name, icon_url = ctx.author.avatar_url)
      for i in range(len(cont)):
-      embedVar.add_field(name=Name[i], value=f'**TYPE** : {types[i]}\n **ABILITY** : {passiveness[i]}\n **ATK** : {attack[i]}\n **HP** : {health[i]}\n **DEF** : {defence[i]}\n **SPD** : {speed[i]}\n **INT** : {intelligence[i]}\n ', inline=True)
+      embedVar.add_field(name=Name[i].capitalize(), value=f'**TYPE** : {(types[i].capitalize())}\n **ABILITY** : {(passiveness[i].capitalize())}\n **ATK** : {attack[i]}\n **HP** : {health[i]}\n **DEF** : {defence[i]}\n **SPD** : {speed[i]}\n **INT** : {intelligence[i]}\n ', inline=True)
      await ctx.send(embed=embedVar)
     else:
         await ctx.send('```Maximum number of comparison is 3```') 

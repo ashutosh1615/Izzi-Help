@@ -66,10 +66,10 @@ async def card(ctx,*,message):
     embed_var.set_author(name=ctx.author.display_name, icon_url = ctx.author.avatar_url)
     embed_var.add_field(name= "**Amount of card with different name needed:**" , value=f"from lvl between {cont[0]} to {cont[1]}" ,inline= False)
     for i in range(3):
-        embed_var.add_field(name =name[i], value= f'**TOTAL CARDS** :**{rarity[i]}' , inline =True)
+        embed_var.add_field(name =name[i], value= f'**TOTAL CARDS** :**{rarity[i]}**' , inline =True)
     embed_var.add_field(name="**Amount of card with same name needed**",value=f"from lvl between {cont[0]} to {cont[1]}",inline = False)
     for j in range(3):
-        embed_var.add_field(name = name[j], value= f'**TOTAL CARDS** :**{(math.ceil(rarity[j]/3))}' , inline =True)
+        embed_var.add_field(name = name[j], value= f'**TOTAL CARDS** :**{(math.ceil(rarity[j]/3))}**' , inline =True)
     await ctx.send(embed=embed_var)
 
 @client.command()

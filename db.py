@@ -1,6 +1,8 @@
 #importing
 import psycopg2
 from config import config
+
+
 #connecting to the database
 
 def connect(cur):

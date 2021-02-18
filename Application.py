@@ -2,7 +2,7 @@ import discord,db,Utility,time,math
 from discord.ext import commands
 intents = discord.Intents.default()
 intents.members = True
-prefix = "i."
+prefix = ["x","X","x ","X "]
 bot_invite="https://discord.com/api/oauth2/authorize?client_id=809710116098015232&permissions=536935424&scope=bot"
 Official_server="https://discord.gg/g84AGfy6"
 db_cur = None
@@ -22,7 +22,7 @@ async def ping(ctx):
 
 @client.command()
 async def loc(ctx,*, message = None):
-     db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziDB" where name like \'%{message}%\'')
+     db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name like \'%{message}%\'')
      ls =  db_cur.fetchone()
      name = ls[0]
      zone = ls[1]
@@ -37,9 +37,9 @@ async def loc(ctx,*, message = None):
 
 @client.command()
 async def invite(ctx):
-    await ctx.send(f"Invite link to bot is {bot_invite} \n  and the server is {Official_server}") 
+    await ctx.send(f"Invite link to bot is disabled for now \n  and the server is {Official_server}") 
 
-@client.command()
+@client.command(aliases=['math','calc'])
 async def cal(ctx,*,message):
     cont= message.split(' ')
     operator = cont[1]
@@ -59,17 +59,17 @@ async def card(ctx,*,message):
     cont= message.split(' ')
     ls = Utility.card(int(cont[0]),int(cont[1]))
     rarity = [ls[1],ls[2],ls[3]]
-    name = ['silver','gold','platinum']
-    cost=[(rarity[0]*40),(rarity[1]*50),(rarity[2]*60)]
+    name = ['Silver','Gold','Platinum']
+    cost=math.ceil(ls[0]/5)
     embed_var = discord.Embed(title = 'ENCHANTMENT',colour = embed_colour)
-    embed_var.set_footer(text= f"***total experience*** = {ls[0]}")
+    embed_var.set_footer(text= f"total experience = {ls[0]} and total cost = {cost}")
     embed_var.set_author(name=ctx.author.display_name, icon_url = ctx.author.avatar_url)
     embed_var.add_field(name= "**Amount of card with different name needed:**" , value=f"from lvl between {cont[0]} to {cont[1]}" ,inline= False)
     for i in range(3):
-        embed_var.add_field(name = name[i], value= f'**TOTAL CARDS** :**{rarity[i]}** cards \n **TOTAL COST** :{cost[i]}' , inline =False)
+        embed_var.add_field(name =name[i], value= f'**TOTAL CARDS** :**{rarity[i]}' , inline =True)
     embed_var.add_field(name="**Amount of card with same name needed**",value=f"from lvl between {cont[0]} to {cont[1]}",inline = False)
     for j in range(3):
-        embed_var.add_field(name = name[i], value= f'**TOTAL CARDS** :**{(math.ceil(rarity[i]/3))}** cards \n **TOTAL COST** :{(cost[i]*3)}' , inline =False)
+        embed_var.add_field(name = name[j], value= f'**TOTAL CARDS** :**{(math.ceil(rarity[j]/3))}' , inline =True)
     await ctx.send(embed=embed_var)
 
 @client.command()
@@ -85,7 +85,7 @@ async def compare(ctx,*, message =None):
     intelligence = []
     if len(cont)<=3:
      for i in range(len(cont)):
-        db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziDB" where name like \'%{cont[i]}%\'')
+        db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name like \'%{cont[i]}%\'')
         ls=db_cur.fetchone()
         Name.append(ls[0])
         types.append(ls[1])

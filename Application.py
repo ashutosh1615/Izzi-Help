@@ -12,8 +12,12 @@ client = commands.Bot(command_prefix=prefix, case_insensitive=True,intents=inten
 client.remove_command('help')
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="ashutosh sleeping"))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Xhelp prefix = x"))
 
+@client.event
+async def on_message(ctx,message):
+  if message.content.lower().startswith('yuki'):
+    await ctx.send("A man with a courage #firstdonator")
 
 @client.command(pass_context=True)
 async def ping(ctx):
@@ -52,15 +56,15 @@ async def cal(ctx,*,message):
     cont= message.split(' ')
     operator = cont[1]
     if operator == '+':
-        await ctx.send(Utility.add(operator,int(cont[0]),int(cont[2])))
+        await ctx.send(Utility.add(operator,float(cont[0]),float(cont[2])))
     if operator == '-':
-        await ctx.send(Utility.subtract(operator,int(cont[0]),int(cont[2])))    
+        await ctx.send(Utility.subtract(operator,float(cont[0]),float(cont[2])))    
     if operator == '*':
-        await ctx.send(Utility.multiply(operator,int(cont[0]),int(cont[2])))
+        await ctx.send(Utility.multiply(operator,float(cont[0]),float(cont[2])))
     if operator == '/':
-        await ctx.send(Utility.divide(operator,int(cont[0]),int(cont[2])))
+        await ctx.send(Utility.divide(operator,float(cont[0]),float(cont[2])))
     if operator == '**':
-        await ctx.send(Utility.power(operator,int(cont[0]),int(cont[2])))  
+        await ctx.send(Utility.power(operator,float(cont[0]),float(cont[2])))  
 
 @client.command()
 async def card(ctx,*,message):

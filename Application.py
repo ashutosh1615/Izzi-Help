@@ -15,9 +15,10 @@ async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Xhelp prefix = x"))
 
 @client.event
-async def on_message(ctx,message):
-  if message.content.lower().startswith('yuki'):
-    await ctx.send("A man with a courage #firstdonator")
+async def on_message(message):
+    if message.content.lower().startswith('yuki'):
+        await message.channel.send("A man with a courage #firstdonator")
+    await client.process_commands(message)
 
 @client.command(pass_context=True)
 async def ping(ctx):
@@ -86,6 +87,9 @@ async def card(ctx,*,message):
 
 @client.command()
 async def compare(ctx,*, message =None):
+    n=3
+    if ctx.author.id==575735373209272328:
+       n = 6     
     cont = message.split(' ')
     Name = []
     types = []
@@ -95,7 +99,7 @@ async def compare(ctx,*, message =None):
     defence = []
     speed = []
     intelligence = []
-    if len(cont)<=3:
+    if len(cont)<=n:
      for i in range(len(cont)):
         db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name like \'%{cont[i]}%\'')
         ls=db_cur.fetchone()

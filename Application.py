@@ -55,7 +55,7 @@ async def soul(ctx,*,message=None):
 
 @client.command()
 async def loc(ctx,*, message = None):
-     db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name like \'%{message}%\'')
+     db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name ilike \'%{message}%\'')
      ls =  db_cur.fetchone()
      name = ls[0]
      zone = ls[1]
@@ -125,7 +125,7 @@ async def compare(ctx,*, message =None):
     intelligence = []
     if len(cont)<=n:
      for i in range(len(cont)):
-        db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name like \'%{cont[i]}%\'')
+        db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name ilike \'%{cont[i]}%\'')
         ls=db_cur.fetchone()
         Name.append(ls[0])
         types.append(ls[1])
@@ -142,9 +142,6 @@ async def compare(ctx,*, message =None):
      await ctx.send(embed=embedVar)
     else:
         await ctx.send('```Maximum number of comparison is 3```') 
-
-
-
 
 @client.command()
 async def say(ctx,*, message : commands.clean_content):

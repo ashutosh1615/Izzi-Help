@@ -30,6 +30,30 @@ async def ping(ctx):
     print(f'Ping {int(ping)}ms')
 
 @client.command()
+async def mana(ctx,*,message=None):
+    if message == None:
+        await ctx.send("Provide a valid value ```xmana <Your initial mana> <Your Max mana>```")
+    else:
+        en= message.split(' ')
+        seconds=Utility.mana_cal(int(en[0]),int(en[1]))
+        await ctx.send(f"```Remaining time is {(Utility.convert(seconds))}```")
+
+    
+@client.command(aliases=("souls","seal"))
+async def soul(ctx,*,message=None):
+    embedVar = discord.Embed(title="Guild",color=embed_colour)
+    if message ==None:
+        embedVar.add_field(name="Error",value="Provide a valid value ```xsouls <Your current guild level>```",inline=True)
+    else:
+        ls = Utility.souls(int(message))
+        names=["souls","seals","gold"]
+        embedVar.add_field(name=names[0], value =f"Total {names[0]} required ={ls[0]}" , inline=True)
+        embedVar.add_field(name=names[1], value =f"Total {names[1]} required ={ls[1]}" , inline=True)
+        embedVar.add_field(name=names[2], value =f"Total {names[2]} required ={ls[2]}" , inline=True)
+    await ctx.send(embed=embedVar)        
+
+
+@client.command()
 async def loc(ctx,*, message = None):
      db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name like \'%{message}%\'')
      ls =  db_cur.fetchone()
@@ -150,3 +174,4 @@ async def hplay(ctx,message=None):
         await ctx.send(embed= embedVar)
         
 client.run("ODA5NzEwMTE2MDk4MDE1MjMy.YCZDTw.STVd_YXqbqnu5vuGyINHgg0p9e0")
+#client.run("NzY4MDI0OTY5NzQ1MDA2NjMy.X46c_g.LfS7bQE15ZUyKnzac115y4O9OJM")

@@ -14,11 +14,7 @@ client.remove_command('help')
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Xhelp prefix = x"))
 
-@client.event
-async def on_message(message):
-    if message.content.lower().startswith('yuki'):
-        await message.channel.send("A man with a courage #firstdonator")
-    await client.process_commands(message)
+
 
 @client.command(pass_context=True)
 async def ping(ctx):
@@ -38,7 +34,12 @@ async def mana(ctx,*,message=None):
         seconds=Utility.mana_cal(int(en[0]),int(en[1]))
         await ctx.send(f"```Remaining time is {(Utility.convert(seconds))}```")
 
-    
+@client.event
+async def on_message(message):
+    if message.content.lower().startswith('yuki'):
+        await message.channel.send("A man with a courage #firstdonator")
+    await client.process_commands(message)
+
 @client.command(aliases=("souls","seal"))
 async def soul(ctx,*,message=None):
     embedVar = discord.Embed(title="Guild",color=embed_colour)
@@ -55,7 +56,10 @@ async def soul(ctx,*,message=None):
 
 @client.command()
 async def loc(ctx,*, message = None):
-     db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name ilike \'%{message}%\'')
+     if message.lower() in ['rem','ram','uta','kon']:
+        db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziDB" where name = \'{message}\'')
+     else:    
+        db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziDB" where name ilike \'%{message}%\'')
      ls =  db_cur.fetchone()
      name = ls[0]
      zone = ls[1]
@@ -125,7 +129,10 @@ async def compare(ctx,*, message =None):
     intelligence = []
     if len(cont)<=n:
      for i in range(len(cont)):
-        db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name ilike \'%{cont[i]}%\'')
+        if cont[i].lower() in ['rem','shiro','uta','kon']:
+            db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name = \'{cont[i]}\'')
+        else:    
+            db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name ilike \'%{cont[i]}%\'')
         ls=db_cur.fetchone()
         Name.append(ls[0])
         types.append(ls[1])
@@ -171,4 +178,3 @@ async def hplay(ctx,message=None):
         await ctx.send(embed= embedVar)
         
 client.run("ODA5NzEwMTE2MDk4MDE1MjMy.YCZDTw.STVd_YXqbqnu5vuGyINHgg0p9e0")
-#client.run("NzY4MDI0OTY5NzQ1MDA2NjMy.X46c_g.LfS7bQE15ZUyKnzac115y4O9OJM")

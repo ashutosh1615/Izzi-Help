@@ -5,7 +5,7 @@ intents.members = True
 prefix = ["x","X","x ","X "]
 Spc =['rem','shiro','uta','kon','sora','hiro', 'mine']
 bot_invite="https://discord.com/api/oauth2/authorize?client_id=809710116098015232&permissions=536935424&scope=bot"
-Official_server="https://discord.gg/g84AGfy6"
+Official_server="https://discord.gg/gT77SU5HFS"
 db_cur = None
 embed_colour = 0xEE82EE
 db_cur=db.connect(db_cur)
@@ -83,7 +83,7 @@ async def invite(ctx):
 
 @client.command(aliases=['math','calc'])
 async def cal(ctx,*,message):
-    cont= message.split(' ')
+    cont= message.split(' and ')
     operator = cont[1]
     if operator == '+':
         await ctx.send(Utility.add(operator,float(cont[0]),float(cont[2])))

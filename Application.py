@@ -3,7 +3,7 @@ from discord.ext import commands
 intents = discord.Intents.default()
 intents.members = True
 prefix = ["x","X","x ","X "]
-Spc =['rem','shiro','uta','kon','sora']
+Spc =['rem','shiro','uta','kon','sora','hiro', 'mine']
 bot_invite="https://discord.com/api/oauth2/authorize?client_id=809710116098015232&permissions=536935424&scope=bot"
 Official_server="https://discord.gg/g84AGfy6"
 db_cur = None

@@ -3,6 +3,7 @@ from discord.ext import commands
 intents = discord.Intents.default()
 intents.members = True
 prefix = ["x","X","x ","X "]
+Spc =['rem','shiro','uta','kon','sora']
 bot_invite="https://discord.com/api/oauth2/authorize?client_id=809710116098015232&permissions=536935424&scope=bot"
 Official_server="https://discord.gg/g84AGfy6"
 db_cur = None
@@ -56,7 +57,7 @@ async def soul(ctx,*,message=None):
 
 @client.command()
 async def loc(ctx,*, message = None):
-     if message.lower() in ['rem','shiro','uta','kon']:
+     if message.lower() in Spc:
         db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name = \'{message}\'')
      else:    
         db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name ilike \'%{message}%\'')
@@ -129,7 +130,7 @@ async def compare(ctx,*, message =None):
     intelligence = []
     if len(cont)<=n:
      for i in range(len(cont)):
-        if cont[i].lower() in ['rem','shiro','uta','kon']:
+        if cont[i].lower() in Spc:
             db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name = \'{cont[i]}\'')
         else:    
             db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name ilike \'%{cont[i]}%\'')

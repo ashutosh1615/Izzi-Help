@@ -119,7 +119,7 @@ async def compare(ctx,*, message =None):
     n=3
     if ctx.author.id==575735373209272328:
        n = 6     
-    cont = message.split(' ')
+    cont = message.split(' and ')
     Name = []
     types = []
     passiveness = []

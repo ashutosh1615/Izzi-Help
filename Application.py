@@ -56,7 +56,7 @@ async def soul(ctx,*,message=None):
 
 @client.command()
 async def loc(ctx,*, message = None):
-     if message.lower() in ['rem','ram','uta','kon']:
+     if message.lower() in ['rem','shiro','uta','kon']:
         db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name = \'{message}\'')
      else:    
         db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name ilike \'%{message}%\'')

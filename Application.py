@@ -34,12 +34,13 @@ async def mana(ctx,*,message=None):
         en= message.split(' ')
         seconds=Utility.mana_cal(int(en[0]),int(en[1]))
         await ctx.send(f"```Remaining time is {(Utility.convert(seconds))}```")
-
+"""
 @client.event
 async def on_message(message):
     if message.content.lower().startswith('yuki'):
         await message.channel.send("A man with a courage #firstdonator")
     await client.process_commands(message)
+"""
 
 @client.command(aliases=("souls","seal"))
 async def soul(ctx,*,message=None):

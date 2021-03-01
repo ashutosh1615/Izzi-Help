@@ -59,7 +59,7 @@ async def soul(ctx,*,message=None):
 @client.command()
 async def loc(ctx,*, message = None):
      if message.lower() in Spc:
-        db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name = \'{message}\'')
+        db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name = \'{message.lower()}\'')
      else:    
         db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name ilike \'%{message}%\'')
      ls =  db_cur.fetchone()
@@ -132,7 +132,7 @@ async def compare(ctx,*, message =None):
     if len(cont)<=n:
      for i in range(len(cont)):
         if cont[i].lower() in Spc:
-            db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name = \'{cont[i]}\'')
+            db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name = \'{cont[i].lower()}\'')
         else:    
             db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name ilike \'%{cont[i]}%\'')
         ls=db_cur.fetchone()

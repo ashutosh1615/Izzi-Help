@@ -2,7 +2,7 @@ import discord,db,Utility,time,math
 from discord.ext import commands
 intents = discord.Intents.default()
 intents.members = True
-prefix = ["x","X","x ","X "]
+prefix = ["x","X"]
 Spc =['rem','shiro','uta','kon','sora','hiro', 'mine']
 bot_invite="https://discord.com/api/oauth2/authorize?client_id=809710116098015232&permissions=536935424&scope=bot"
 Official_server="https://discord.gg/gT77SU5HFS"

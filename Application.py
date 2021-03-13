@@ -84,7 +84,7 @@ async def invite(ctx):
 
 @client.command(aliases=['math','calc'])
 async def cal(ctx,*,message):
-    cont= message.split(' and ')
+    cont= message.split(' ')
     operator = cont[1]
     if operator == '+':
         await ctx.send(Utility.add(operator,float(cont[0]),float(cont[2])))

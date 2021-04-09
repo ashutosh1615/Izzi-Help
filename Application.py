@@ -1,21 +1,53 @@
-import discord,db,Utility,time,math
+import discord,Utility,time,math
 from discord.ext import commands
+import db as dbs
 intents = discord.Intents.default()
 intents.members = True
-prefix = ["x","X"]
+prefix = ["x","X","x ","X "]
 Spc =['rem','shiro','uta','kon','sora','hiro', 'mine']
 bot_invite="https://discord.com/api/oauth2/authorize?client_id=809710116098015232&permissions=536935424&scope=bot"
 Official_server="https://discord.gg/gT77SU5HFS"
 db_cur = None
 embed_colour = 0xEE82EE
-db_cur=db.connect(db_cur)
+db=dbs.connect()
 client = commands.Bot(command_prefix=prefix, case_insensitive=True,intents=intents)
 client.remove_command('help')
+
+async def page(ctx,message,number,pages):
+    await message.add_reaction('⏮')
+    await message.add_reaction('◀')
+    await message.add_reaction('▶')
+    await message.add_reaction('🗑')
+    def check(reaction, user):
+        return user == ctx.author
+    i = 0
+    reaction = None
+  
+    while True:  
+        if str(reaction) == '⏮':
+            i = 0
+            await message.edit(embed = pages[i])
+        elif str(reaction) == '◀':
+            if i > 0:
+                i -= 1
+                await message.edit(embed = pages[i])
+        elif str(reaction) == '▶':
+            if i <= number:
+                i += 1
+                await message.edit(embed = pages[i])
+        elif str(reaction) == '🗑':
+            await message.delete()
+        
+        try:
+            reaction, user = await ctx.bot.wait_for('reaction_add', timeout = 30.0, check = check)
+            await message.remove_reaction(reaction, user)
+        except:
+            break
+    await message.clear_reactions()
+
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Xhelp prefix = x"))
-
-
 
 @client.command(pass_context=True)
 async def ping(ctx):
@@ -34,13 +66,77 @@ async def mana(ctx,*,message=None):
         en= message.split(' ')
         seconds=Utility.mana_cal(int(en[0]),int(en[1]))
         await ctx.send(f"```Remaining time is {(Utility.convert(seconds))}```")
-"""
+
+def in_guild(guild_id: list):  
+  async def predicate(ctx):
+    if not ctx.guild:
+      return False
+    if ctx.guild.id in guild_id:
+       return True
+  return commands.check(predicate)   
+
+
+@in_guild([811410080313770014,784087004806774815])
+@client.command()
+async def fadd(ctx,*,message =None):
+        if message ==None:
+            await ctx.send("Please add the valid name,rate you need the fooder for and  amount example ```xfadd izaya,130,500``` ||rate should be between 100 and 200 done for avoiding troll||")
+        else:
+            cont = message.split(',')
+            if int(cont[1])>=100 and int(cont[1])<=200:
+                amount=int(cont[1])*int(cont[2])
+                db.cur.execute("""insert into farm(user_name,id,card,rate,amount,total) values(%s,%s,%s,%s,%s,%s)""",(ctx.author.name,ctx.author.id,cont[0],cont[1],cont[2],amount))
+                db.conn.commit()
+                db.cur.execute("""select index from farm where id=%s and card=%s and rate=%s and amount=%s""",(ctx.author.id,cont[0],cont[1],cont[2]))
+                embed=discord.Embed(name=None, value=None, color=discord.Color.random())
+                embed.add_field(name="Success", value=f"Your order has beed added to farming list and your id is {db.cur.fetchone()[0]} use xfremove <id> to remove your order when you get a farmer", inline=False)
+                await ctx.send(embed=embed)
+            else:
+                await ctx.send("No trolling allowed rate should be between 100 and 200 ")
+
+@client.command()
+async def fremove(ctx,message):
+    if message==None:
+        await ctx.send("send the id of your order xfremove <id>")
+    else:
+        db.cur.execute("""select exists(select index from farm where index=%s and id=%s)""",(int(message),ctx.author.id))    
+        if db.cur.fetchone()[0]:
+            db.cur.execute("""delete from farm where index = %s and id=%s""",(message,ctx.author.id) )
+            db.conn.commit()
+            await ctx.send("Your order being removed")
+        else:
+            await ctx.send("This order id not exist provide a valid one")
+
+@client.command()
+async def flist(ctx):
+    db.cur.execute("""select index,user_name,card,rate,amount,total from farm""")
+    ls=db.cur.fetchall()
+    pages=[]
+    x=0
+
+
+    for j in range((len(ls)//10)+1):
+      pages.append(discord.Embed(title="Farming List", description="ALL THE FARMING ORDERS", colour=discord.Color.random()))
+      pages[j].set_author(name=ctx.author, icon_url=ctx.author.avatar_url)  
+      pages[j].set_footer(text=f"Page :{j+1}/{(len(ls)//10)+1} | Total order: {len(ls)}")
+    for i in range(len(ls)):
+      ls_=ls[i]
+      pages[x].add_field(name=f"**#{i+1} | {ls_[1]} | Card Required {ls_[2]}**", value= f"Rate {ls_[3]} | Amount of cards {ls_[4]} | Total cost {ls_[5]} | ID : {ls_[0]}",inline=False)
+      if ((i+1) % 10) ==0:
+        x=x+1   
+    message = await ctx.send(embed=pages[0])
+    await page(ctx,message,(len(ls)//10),pages)
+        
+
+
+
+
+
 @client.event
 async def on_message(message):
     if message.content.lower().startswith('yuki'):
         await message.channel.send("A man with a courage #firstdonator")
     await client.process_commands(message)
-"""
 
 @client.command(aliases=("souls","seal"))
 async def soul(ctx,*,message=None):
@@ -56,23 +152,6 @@ async def soul(ctx,*,message=None):
     await ctx.send(embed=embedVar)        
 
 
-@client.command()
-async def loc(ctx,*, message = None):
-     if message.lower() in Spc:
-        db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name = \'{message.lower()}\'')
-     else:    
-        db_cur.execute(f'SELECT Name,zone,floor1 from public."IzziHelp" where name ilike \'%{message}%\'')
-     ls =  db_cur.fetchone()
-     name = ls[0]
-     zone = ls[1]
-     floor = ls[2]
-  
-     embedVar = discord.Embed(title=name.upper(), color=embed_colour)
-     embedVar.set_author(name=ctx.author.display_name, icon_url = ctx.author.avatar_url)
-     embedVar.add_field(name="ZONE", value=zone, inline=True)
-     embedVar.add_field(name="Floors", value=floor, inline=True)
-     embedVar.set_footer()
-     await ctx.send(embed=embedVar)
 
 @client.command()
 async def help(ctx):
@@ -84,7 +163,7 @@ async def invite(ctx):
 
 @client.command(aliases=['math','calc'])
 async def cal(ctx,*,message):
-    cont= message.split(' ')
+    cont= message.split(' and ')
     operator = cont[1]
     if operator == '+':
         await ctx.send(Utility.add(operator,float(cont[0]),float(cont[2])))
@@ -115,42 +194,6 @@ async def card(ctx,*,message):
         embed_var.add_field(name = name[j], value= f'**TOTAL CARDS** :**{(math.ceil(rarity[j]/3))}**' , inline =True)
     await ctx.send(embed=embed_var)
 
-@client.command()
-async def compare(ctx,*, message =None):
-    n=3
-    if ctx.author.id==575735373209272328:
-       n = 6     
-    cont = message.split(' and ')
-    Name = []
-    types = []
-    passiveness = []
-    attack = []
-    health = []
-    defence = []
-    speed = []
-    intelligence = []
-    if len(cont)<=n:
-     for i in range(len(cont)):
-        if cont[i].lower() in Spc:
-            db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name = \'{cont[i].lower()}\'')
-        else:    
-            db_cur.execute(f'select name,type,passiveness,attack,health,defence,speed,intelligence from public."IzziHelp" where name ilike \'%{cont[i]}%\'')
-        ls=db_cur.fetchone()
-        Name.append(ls[0])
-        types.append(ls[1])
-        passiveness.append(ls[2])
-        attack.append(ls[3])
-        health.append(ls[4])
-        defence.append(ls[5])
-        speed.append(ls[6])
-        intelligence.append(ls[7])
-     embedVar = discord.Embed(title='Comparison', color=embed_colour)
-     embedVar.set_author(name=ctx.author.display_name, icon_url = ctx.author.avatar_url)
-     for i in range(len(cont)):
-      embedVar.add_field(name=Name[i].capitalize(), value=f'**TYPE** : {(types[i].capitalize())}\n **ABILITY** : {(passiveness[i].capitalize())}\n **ATK** : {attack[i]}\n **HP** : {health[i]}\n **DEF** : {defence[i]}\n **SPD** : {speed[i]}\n **INT** : {intelligence[i]}\n ', inline=True)
-     await ctx.send(embed=embedVar)
-    else:
-        await ctx.send('```Maximum number of comparison is 3```') 
 
 @client.command()
 async def say(ctx,*, message : commands.clean_content):

@@ -6,7 +6,7 @@ intents.members = True
 prefix = ["x","X","x ","X "]
 Spc =['rem','shiro','uta','kon','sora','hiro', 'mine']
 bot_invite="https://discord.com/api/oauth2/authorize?client_id=809710116098015232&permissions=536935424&scope=bot"
-Official_server="https://discord.gg/gT77SU5HFS"
+Official_server="https://discord.gg/kfk5twftDg"
 db_cur = None
 embed_colour = 0xEE82EE
 db=dbs.connect()

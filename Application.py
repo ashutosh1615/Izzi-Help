@@ -57,6 +57,11 @@ async def ping(ctx):
     ping = (time.monotonic() - before) * 1000
     await message.edit(content=f"Pong!  `{int(ping)}ms`")
     print(f'Ping {int(ping)}ms')
+@client.command()
+async def sad_life(ctx):
+    embedV=discord.Embed(name=None,color=discord.Color.random())
+    embedV.add_field(name="yas my life is sad",value="**not made more wait **")
+    await ctx.send(embed=Embed)
 
 @client.command()
 async def mana(ctx,*,message=None):

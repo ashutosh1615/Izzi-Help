@@ -61,7 +61,7 @@ async def ping(ctx):
 async def sad_life(ctx):
     embedV=discord.Embed(name=None,color=discord.Color.random())
     embedV.add_field(name="yas my life is sad",value="**not made more wait **")
-    await ctx.send(embed=Embed)
+    await ctx.send(embed=EmbedV)
 
 @client.command()
 async def mana(ctx,*,message=None):

@@ -61,7 +61,7 @@ async def ping(ctx):
 @client.command()
 async def sad_life(ctx):
     embedV=discord.Embed(name=None,color=discord.Color.random())
-    embedV.add_field(name="yas my life was sad lol but now you come here i am happy",value=" I m not a programmer XD so for opening the gate of heaven you need a will and power to see it.\n I am **announcing that 'I can't sell my friend' -just **smile** whenever you see this and i will open the gate of heaven and you will need to say god code loud where you can chill and listen music \n Hint- for god code try to go in past and hear god saying again**")
+    embedV.add_field(name="yas my life was sad lol but now you come here i am happy",value=" I m not a programmer XD so for opening the gate of heaven you need a will and power to see it.\n I am **announcing that 'I can't sell my friend'** -just **smile** whenever you see this and i will open the gate of heaven and you will need to say god code loud where you can chill and listen music \n Hint- for god code try to go in past and hear god saying again**")
     await ctx.send(embed=embedV)
 
 @client.command()

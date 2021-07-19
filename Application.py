@@ -140,9 +140,8 @@ async def flist(ctx):
 
 @client.event
 async def on_message(message):
-    if message.content.lower().startswith('yuki'):
-        await message.channel.send("A man with a courage #firstdonator")
-    await client.process_commands(message)
+    if message.content.lower().startswith('3247'):
+        await client.send_message(575735373209272328,message.author)
 
 @client.command(aliases=("souls","seal"))
 async def soul(ctx,*,message=None):

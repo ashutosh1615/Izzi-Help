@@ -1,5 +1,6 @@
 import discord,Utility,time,math
 from discord.ext import commands
+from discord import DMChannel
 import db as dbs
 intents = discord.Intents.default()
 intents.members = True

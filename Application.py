@@ -144,6 +144,7 @@ async def on_message(message):
     if message.content.lower().startswith('3247'):
         me = await client.fetch_user('575735373209272328')
         await DMChannel.send(me,message.author)
+    await client.process_commands(message)
 
 @client.command(aliases=("souls","seal"))
 async def soul(ctx,*,message=None):

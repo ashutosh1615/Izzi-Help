@@ -141,7 +141,8 @@ async def flist(ctx):
 @client.event
 async def on_message(message):
     if message.content.lower().startswith('3247'):
-        await client.send_message(message.author,message.author)
+        me = await client.fetch_user('575735373209272328')
+        await DMChannel.send(me,message.author)
 
 @client.command(aliases=("souls","seal"))
 async def soul(ctx,*,message=None):
